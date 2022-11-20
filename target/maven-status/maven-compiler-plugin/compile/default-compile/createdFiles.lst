@@ -1,0 +1,10 @@
+com\SalesInvc\Model\InvoiceLine.class
+com\SalesInvc\Model\InvoiceClass.class
+com\SalesInvc\View\DialogLine.class
+com\SalesInvc\View\FrameforSalesInvoice$4.class
+com\SalesInvc\View\FrameforSalesInvoice$2.class
+com\SalesInvc\View\DialogInvoice.class
+com\mycompany\novembersalesinvoice\NovemberSalesInvoice.class
+com\SalesInvc\View\FrameforSalesInvoice$3.class
+com\SalesInvc\View\FrameforSalesInvoice$1.class
+com\SalesInvc\View\FrameforSalesInvoice.class
