@@ -254,7 +254,7 @@ if (RowofItemSelect > -1 && RowSelect>-1)
     }
 
     private void OKCreationInvoice() {
-        DateFormat formatOfDate = new SimpleDateFormat("DD-MM-YYYY");
+        DateFormat formatOfDate = new SimpleDateFormat("DD/MM/YYYY");
         String dateOfInvoice =dialoginvoice.getDateOfInvoiceField().getText();
         String customerOwnerOfInvoice = dialoginvoice.getCustomerOwnerOfInvoiceField().getText();
         int numOfNewInvoice = InvcFrame.newInvoiceNum();
