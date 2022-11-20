@@ -16,9 +16,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -41,16 +45,16 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
             case "Save File(s)":
                 fileSave();
                 break;
-            case "new invoice creation":
+            case "Create New Invoice":
                 newInvoiceCreation();
                 break;
-            case "invoice deletion":
+            case "Delete Invoice":
                 invoiceDeletion();
                 break;
-            case "Item Creation":
+            case "Save":
                 itemCreation();
                 break;
-            case "Item Deletion":
+            case "Cancel":
                 itemDeletion();
                 break;
             case "createInvoiceCancel":
@@ -97,6 +101,7 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
            ArrayList<InvoiceClass> InvoiceArr = new ArrayList<>();
            for (String LinesHead : LinesHeader )
            {
+               try{
                String[] HeaderItemsSplit =LinesHead.split(",");
                int numOfInvoice = Integer.parseInt(HeaderItemsSplit[0]);
                String dateOfInvoice = HeaderItemsSplit[1];
@@ -104,6 +109,11 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
                
                InvoiceClass InvcClass = new InvoiceClass(numOfInvoice,dateOfInvoice,customerOwnerOfInvoice);
                InvoiceArr.add(InvcClass);
+               } catch(Exception excep){
+                   excep.printStackTrace();
+       JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for reading lines in load file , please use CSV format", "Error", JOptionPane.ERROR_MESSAGE);
+                   
+               }
            }
            Approved = Fchoose.showOpenDialog(InvcFrame);
            if(Approved == JFileChooser.APPROVE_OPTION)
@@ -114,6 +124,7 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
                System.out.println("Read Lines of Invoices");
                for (String LineForEachLine :LinesForEachLine )
                {
+                   try{
                    String LinesPartsSplit[] = LineForEachLine.split(",");
                    int numOfInvoice = Integer.parseInt(LinesPartsSplit[0]);
                    String NameOfItem = LinesPartsSplit[1];
@@ -130,7 +141,11 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
                    }
                    InvoiceLine invoiceline = new InvoiceLine(numOfInvoice,NameOfItem,PriceOfItem,NumOfItems,Invc );
                    Invc.getInvoiceLine().add(invoiceline);
+                   }catch(Exception excep){
+                   excep.printStackTrace();
+       JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for reading lines in load file , please use CSV format", "Error", JOptionPane.ERROR_MESSAGE);
                    
+               }
                }
                System.out.println("get Invoice Lines");
            }
@@ -141,7 +156,9 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
            InvcFrame.getTablemodelfordisplayinvoices().fireTableDataChanged();
        }
        }catch(IOException excep)
-       {excep.printStackTrace();}
+       {excep.printStackTrace();
+       JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for Loading File , please use CSV format", "Error", JOptionPane.ERROR_MESSAGE);
+       }
        
     }
 
@@ -237,16 +254,39 @@ if (RowofItemSelect > -1 && RowSelect>-1)
     }
 
     private void OKCreationInvoice() {
+        DateFormat formatOfDate = new SimpleDateFormat("DD-MM-YYYY");
         String dateOfInvoice =dialoginvoice.getDateOfInvoiceField().getText();
         String customerOwnerOfInvoice = dialoginvoice.getCustomerOwnerOfInvoiceField().getText();
         int numOfNewInvoice = InvcFrame.newInvoiceNum();
-        
-        InvoiceClass invoiceclass = new InvoiceClass(numOfNewInvoice , dateOfInvoice , customerOwnerOfInvoice);
+        try{
+            String[] dateSplitted = dateOfInvoice.split("-");
+            if(dateSplitted.length< 3)
+            {
+                JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for the Date", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                int daynum = Integer.parseInt(dateSplitted[0]);
+                int monthnum= Integer.parseInt(dateSplitted[1]);
+                int yearnum = Integer.parseInt(dateSplitted[2]);
+                if (daynum >31 || monthnum > 12 || yearnum >2022 || yearnum<1000)
+                {
+                    JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for the Date", "Error", JOptionPane.ERROR_MESSAGE); 
+                }
+                else {
+                    InvoiceClass invoiceclass = new InvoiceClass(numOfNewInvoice , dateOfInvoice , customerOwnerOfInvoice);
         InvcFrame.getInvoices().add(invoiceclass);
         InvcFrame.getTablemodelfordisplayinvoices().fireTableDataChanged();
         dialoginvoice.setVisible(false);
       dialoginvoice.dispose();
       dialoginvoice = null;
+                }
+            }
+            
+        } catch(Exception excep)
+        {
+            JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for the Date", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
         
         
         
