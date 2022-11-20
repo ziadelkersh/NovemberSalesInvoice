@@ -39,10 +39,10 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
         String CommandAction = e.getActionCommand();
         System.out.println("this is an action :" + CommandAction);
         switch (CommandAction){
-            case "Load File(s)":
+            case "Load File":
                 fileLoad();
                 break;
-            case "Save File(s)":
+            case "Save File":
                 fileSave();
                 break;
             case "Create New Invoice":
@@ -259,7 +259,7 @@ if (RowofItemSelect > -1 && RowSelect>-1)
         String customerOwnerOfInvoice = dialoginvoice.getCustomerOwnerOfInvoiceField().getText();
         int numOfNewInvoice = InvcFrame.newInvoiceNum();
         try{
-            String[] dateSplitted = dateOfInvoice.split("-");
+            String[] dateSplitted = dateOfInvoice.split("/");
             if(dateSplitted.length< 3)
             {
                 JOptionPane.showMessageDialog(InvcFrame, "Wrong Format for the Date", "Error", JOptionPane.ERROR_MESSAGE);
