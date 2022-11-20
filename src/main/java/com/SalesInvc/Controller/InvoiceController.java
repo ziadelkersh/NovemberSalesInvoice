@@ -226,6 +226,7 @@ if (RowofItemSelect > -1 && RowSelect>-1)
     tablemodelfordisplaylines.fireTableDataChanged();
     InvcFrame.getTablemodelfordisplayinvoices().fireTableDataChanged();
 
+    
      }
     }
 
