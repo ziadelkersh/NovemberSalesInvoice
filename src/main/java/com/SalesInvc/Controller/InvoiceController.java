@@ -51,10 +51,10 @@ public class InvoiceController implements ActionListener  , ListSelectionListene
             case "Delete Invoice":
                 invoiceDeletion();
                 break;
-            case "Save":
+            case "Create Item":
                 itemCreation();
                 break;
-            case "Cancel":
+            case "Delete Item":
                 itemDeletion();
                 break;
             case "createInvoiceCancel":

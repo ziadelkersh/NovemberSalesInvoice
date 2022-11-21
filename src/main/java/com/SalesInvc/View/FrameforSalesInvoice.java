@@ -123,14 +123,14 @@ public class FrameforSalesInvoice extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(TableOfItemsPerInvoice);
 
-        ItemCreation.setText("Save");
+        ItemCreation.setText("Create Item");
         ItemCreation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ItemCreationActionPerformed(evt);
             }
         });
 
-        ItemDeletion.setText("Cancel");
+        ItemDeletion.setText("Delete Item");
         ItemDeletion.setToolTipText("");
 
         jLabel5.setText("Invoices Items");
